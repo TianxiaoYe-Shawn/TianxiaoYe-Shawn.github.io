@@ -1,0 +1,3922 @@
+<!DOCTYPE html>
+<html lang="en,zh-cn,default">
+<head>
+  <meta charset="UTF-8">
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="陈英发 Yingfa Chen">
+
+
+  <meta name="subtitle" content="叶天霄">
+
+
+  <meta name="description" content="清华大学自然语言处理二年级研究生，出生长大在挪威，到北京求学。当前在研究如何控制大模型的知识和行为。
+
+A second year graduate student in THUNLP (the NLP lab of Tsinghua University). Born and raised in Norway, and went to Beijing for education. I am currently working about controllable knowledge and behavior of LLM.
+">
+
+
+  <meta name="keywords" content="Chen Yingfa,陈英发,Natural Language Processing,Artificial Intelligence">
+
+
+<title>Tags 标签 | Tianxiao Ye</title>
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"
+/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/css/search.css">
+
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ic:round-dark-mode" : "ic:round-light-mode");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      isDark = !isDark;
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ic:round-dark-mode" : "ic:round-light-mode");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ic:round-dark-mode" : "ic:round-light-mode"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body 
+  class="
+    bg-[var(--c-0)]
+    text-[var(--c-80)]
+  ">
+  <!-- The navigation bar -->
+<header class="
+    flex flex-row items-center
+    w-full
+    pr-4
+    z-10
+    border-b-[1px]
+    border-b-[var(--c-border)]
+    dark:bg-[var(--c-0)]
+    dark:border-b-[var(--c-0)]
+    gap-2
+    h-[var(--h-header)]
+    text-[var(--c-80)]
+">
+  <!-- Left part -->
+  <div class="overflow-hidden h-full flex flex-row items-center">
+    <!-- Site Title on the top left -->
+    <a href="/" class="
+            whitespace-nowrap
+            text-2xl
+            text-[var(--c-theme)]
+            hover:text-[var(--c-theme)]
+            pl-4
+            font-black
+            bg-gradient-to-r from-cyan-500
+            to-blue-500 bg-clip-text text-transparent
+          ">
+      Tianxiao Ye
+    </a>
+  </div>
+  <!-- Div for pushing items to both sides -->
+  <div class="flex-1"></div>
+  <!-- Right part -->
+  <div class="flex flex-row items-center z-20 h-full">
+    <!-- Page links -->
+    <div class="hidden sm:flex flex-row h-full">
+      
+      
+      
+      
+      
+      
+      <a href="/./archives" class="
+                        flex flex-row items-center
+                        gap-1
+                        hover:underline
+                        hover:bg-[var(--c-20)]
+                        hover:text-[var(--c-theme)]
+                        transition-all
+                        px-2
+                        py-1
+                        my-1
+                        rounded-lg
+                        group
+                    ">
+        
+        <iconify-icon class="group-hover:scale-125 transition-transform" icon="mingcute:inbox-fill" width="22">
+        </iconify-icon>
+        
+        
+        <p>Posts</p>
+        
+      </a>
+      
+      
+      
+      
+      
+      
+      <a href="/./publications" class="
+                        flex flex-row items-center
+                        gap-1
+                        hover:underline
+                        hover:bg-[var(--c-20)]
+                        hover:text-[var(--c-theme)]
+                        transition-all
+                        px-2
+                        py-1
+                        my-1
+                        rounded-lg
+                        group
+                    ">
+        
+        <iconify-icon class="group-hover:scale-125 transition-transform" icon="mingcute:science-fill" width="22">
+        </iconify-icon>
+        
+        
+        <p>Publications</p>
+        
+      </a>
+      
+      
+      
+      
+      
+      
+      <a href="/./about" class="
+                        flex flex-row items-center
+                        gap-1
+                        hover:underline
+                        hover:bg-[var(--c-20)]
+                        hover:text-[var(--c-theme)]
+                        transition-all
+                        px-2
+                        py-1
+                        my-1
+                        rounded-lg
+                        group
+                    ">
+        
+        <iconify-icon class="group-hover:scale-125 transition-transform" icon="mingcute:user-info-fill" width="22">
+        </iconify-icon>
+        
+        
+        <p>About</p>
+        
+      </a>
+      
+      
+      
+      
+      
+      
+      <a href="/./categories" class="
+                        flex flex-row items-center
+                        gap-1
+                        hover:underline
+                        hover:bg-[var(--c-20)]
+                        hover:text-[var(--c-theme)]
+                        transition-all
+                        px-2
+                        py-1
+                        my-1
+                        rounded-lg
+                        group
+                    ">
+        
+        <iconify-icon class="group-hover:scale-125 transition-transform" icon="mingcute:classify-2-fill" width="22">
+        </iconify-icon>
+        
+        
+        <p>Categories</p>
+        
+      </a>
+      
+      
+      
+      
+      
+      
+      <a href="/./tags" class="
+                        flex flex-row items-center
+                        gap-1
+                        hover:underline
+                        hover:bg-[var(--c-20)]
+                        hover:text-[var(--c-theme)]
+                        transition-all
+                        px-2
+                        py-1
+                        my-1
+                        rounded-lg
+                        group
+                    ">
+        
+        <iconify-icon class="group-hover:scale-125 transition-transform" icon="mingcute:tag-fill" width="22">
+        </iconify-icon>
+        
+        
+        <p>Tags</p>
+        
+      </a>
+      
+      
+      
+      
+      
+      
+      <a href="/./index" class="
+                        flex flex-row items-center
+                        gap-1
+                        hover:underline
+                        hover:bg-[var(--c-20)]
+                        hover:text-[var(--c-theme)]
+                        transition-all
+                        px-2
+                        py-1
+                        my-1
+                        rounded-lg
+                        group
+                    ">
+        
+        <iconify-icon class="group-hover:scale-125 transition-transform" icon="mingcute:home-2-fill" width="22">
+        </iconify-icon>
+        
+        
+      </a>
+      
+    </div>
+    <!-- Icons on the right -->
+    <div class="flex flex-row items-center">
+
+      <!-- TODO: Add search icon here -->
+
+      <!-- Dark/light toggle icon -->
+      <a class="flex group p-1" title="toggle theme" id="toggle-dark">
+        <iconify-icon class="transition-transform
+                    group-hover:rotate-[45deg]
+                    group-hover:scale-125
+                    group-hover:text-[var(--c-theme)]" width="24" id="theme-icon">
+        </iconify-icon>
+      </a>
+      <!-- Icon for dropout menu on small screens -->
+      <div class="flex p-1 mx-1 sm:hidden">
+        <a class="w-5 h-5" aria-hidden="true" id="open-menu">
+          <iconify-icon width="24" icon="mingcute:menu-fill" class="transition-transform hover:scale-125 hover:rotate-[5deg]">
+          </iconify-icon>
+        </a>
+        <a class="w-5 h-5 hidden" aria-hidden="true" id="close-menu">
+          <iconify-icon width="24" icon="mingcute:close-circle-fill" class="transition-transform hover:scale-125 hover:rotate-[80deg]">
+          </iconify-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Dropdown menu on small screens -->
+<div id="menu-panel" class="
+        h-0
+        overflow-hidden
+        sm:hidden
+        w-full
+        z-10
+        rounded
+    ">
+  <div id="menu-content" class="
+        flex
+        flex-row
+        justify-center
+        items-center
+        font-bold
+        text-xl
+        border-b-[1px]
+        relative
+        z-20
+        border-[var(--c-sep)]
+        px-2
+        py-2
+        -translate-y-full
+        transition-transform
+        duration-200
+        ">
+    
+    
+    
+    <a href="/./archives" class="
+                flex flex-row items-center
+                gap-2
+                h-12
+                hover:underline
+                hover:bg-[var(--c-20)]
+                px-3
+                py-1
+                rounded-lg
+            ">
+      <iconify-icon icon="mingcute:inbox-fill" width="22">
+      </iconify-icon>
+      <p>
+        posts
+      </p>
+    </a>
+    
+    
+    
+    
+    <a href="/./publications" class="
+                flex flex-row items-center
+                gap-2
+                h-12
+                hover:underline
+                hover:bg-[var(--c-20)]
+                px-3
+                py-1
+                rounded-lg
+            ">
+      <iconify-icon icon="mingcute:science-fill" width="22">
+      </iconify-icon>
+      <p>
+        publications
+      </p>
+    </a>
+    
+    
+    
+    
+    <a href="/./about" class="
+                flex flex-row items-center
+                gap-2
+                h-12
+                hover:underline
+                hover:bg-[var(--c-20)]
+                px-3
+                py-1
+                rounded-lg
+            ">
+      <iconify-icon icon="mingcute:user-info-fill" width="22">
+      </iconify-icon>
+      <p>
+        about
+      </p>
+    </a>
+    
+    
+    
+    
+    <a href="/./categories" class="
+                flex flex-row items-center
+                gap-2
+                h-12
+                hover:underline
+                hover:bg-[var(--c-20)]
+                px-3
+                py-1
+                rounded-lg
+            ">
+      <iconify-icon icon="mingcute:classify-2-fill" width="22">
+      </iconify-icon>
+      <p>
+        categories
+      </p>
+    </a>
+    
+    
+    
+    
+    <a href="/./tags" class="
+                flex flex-row items-center
+                gap-2
+                h-12
+                hover:underline
+                hover:bg-[var(--c-20)]
+                px-3
+                py-1
+                rounded-lg
+            ">
+      <iconify-icon icon="mingcute:tag-fill" width="22">
+      </iconify-icon>
+      <p>
+        tags
+      </p>
+    </a>
+    
+    
+    
+    
+    <a href="/./index" class="
+                flex flex-row items-center
+                gap-2
+                h-12
+                hover:underline
+                hover:bg-[var(--c-20)]
+                px-3
+                py-1
+                rounded-lg
+            ">
+      <iconify-icon icon="mingcute:home-2-fill" width="22">
+      </iconify-icon>
+      <p>
+        home
+      </p>
+    </a>
+    
+    
+  </div>
+</div>
+  <main>
+    <!-- 
+This page has two versions, which is shown is based on whether current page
+is "tag".
+
+  - url:'http://localhost:4000/tag/' return false.
+- url:'http://localhost:4000/tags/test/' return true.
+
+The '/tag/' page shows all tags and is where you land on when you click
+on the "Tags" in the navigation bar. Otherwise if you enter 'tags' by clicking on of the tag elements in some
+posts, and it shows all posts with that tag.
+
+To add a "Tags" page.
+
+1. hexo new page "tag"
+2. cd source/tag/index.md
+3. Add the following front matter.
+
+---
+title: '''tag'''
+date: 2019-06-09 09:56:49
+layout: tag
+---
+-->
+
+  <!-- 显示所有tag，让用户选择 -->
+  <div class="flex flex-col gap-2 px-6 max-w-prose mx-auto md:px-0 my-8">
+    <div class="flex flex-row items-center gap-2">
+      <iconify-icon width="28" icon="mingcute:tag-fill"></iconify-icon>
+      <h2 class="font-bold text-2xl">Tags</h2>
+    </div>
+    <div class="tags-container flex flex-wrap gap-1 mt-2">
+      
+      
+        <a href="/tags/life/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/life/">
+          #life
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×6
+          </span>
+        </a>
+      
+        <a href="/tags/%E4%B8%AD%E7%A7%8B/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E4%B8%AD%E7%A7%8B/">
+          #中秋
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E4%B8%AD%E6%96%87/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E4%B8%AD%E6%96%87/">
+          #中文
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×5
+          </span>
+        </a>
+      
+        <a href="/tags/00/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/00/">
+          #00
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×5
+          </span>
+        </a>
+      
+        <a href="/tags/wedding/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/wedding/">
+          #wedding
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E4%B8%AD%E7%A7%8B-middle-autumn/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E4%B8%AD%E7%A7%8B-middle-autumn/">
+          #中秋-middle-autumn
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%9B%BD%E5%BA%86-national-day/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%9B%BD%E5%BA%86-national-day/">
+          #国庆-national-day
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%BA%94%E5%9F%8E/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%BA%94%E5%9F%8E/">
+          #应城
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E6%AD%A6%E6%B1%89-wuhan/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E6%AD%A6%E6%B1%89-wuhan/">
+          #武汉-wuhan
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/paper/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/paper/">
+          #paper
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/research/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/research/">
+          #research
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×6
+          </span>
+        </a>
+      
+        <a href="/tags/cfd/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/cfd/">
+          #cfd
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/dataset/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/dataset/">
+          #dataset
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/english/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/english/">
+          #english
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×6
+          </span>
+        </a>
+      
+        <a href="/tags/pinn/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/pinn/">
+          #pinn
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/fno/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/fno/">
+          #fno
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/physics/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/physics/">
+          #physics
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/machine-learning/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/machine-learning/">
+          #machine-learning
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/deep-learning/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/deep-learning/">
+          #deep-learning
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/deeponet/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/deeponet/">
+          #deeponet
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/ai4science/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/ai4science/">
+          #ai4science
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/ai-alignment/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/ai-alignment/">
+          #ai-alignment
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/llm/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/llm/">
+          #llm
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×5
+          </span>
+        </a>
+      
+        <a href="/tags/gpt/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/gpt/">
+          #gpt
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/activation-modification/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/activation-modification/">
+          #activation-modification
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/adaptation/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/adaptation/">
+          #adaptation
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/model-editing/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/model-editing/">
+          #model-editing
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/representation-engineering/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/representation-engineering/">
+          #representation-engineering
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/fine-tuning/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/fine-tuning/">
+          #fine-tuning
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/parameter-efficient-tuning/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/parameter-efficient-tuning/">
+          #parameter-efficient-tuning
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/arxiv/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/arxiv/">
+          #arxiv
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/knowledge/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/knowledge/">
+          #knowledge
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/emnlp/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/emnlp/">
+          #emnlp
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/model-editing/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/model-editing/">
+          #model editing
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/in-context-learning/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/in-context-learning/">
+          #in-context-learning
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/ai/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/ai/">
+          #ai
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/serac/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/serac/">
+          #serac
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/rome/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/rome/">
+          #rome
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/eren/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/eren/">
+          #eren
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/mend/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/mend/">
+          #mend
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/nlp/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/nlp/">
+          #nlp
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/long-context/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/long-context/">
+          #long-context
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/benchmark/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/benchmark/">
+          #benchmark
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/recurrence/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/recurrence/">
+          #recurrence
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/linear-attention/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/linear-attention/">
+          #linear-attention
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/transformer/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/transformer/">
+          #transformer
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/activation-engineering/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/activation-engineering/">
+          #activation-engineering
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/interpretability/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/interpretability/">
+          #interpretability
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/rl/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/rl/">
+          #rl
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/alignment/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/alignment/">
+          #alignment
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/maze/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/maze/">
+          #maze
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/ethics/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/ethics/">
+          #ethics
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/safety/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/safety/">
+          #safety
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E9%9D%A2%E5%A3%81%E6%99%BA%E8%83%BD/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E9%9D%A2%E5%A3%81%E6%99%BA%E8%83%BD/">
+          #面壁智能
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/modelbest/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/modelbest/">
+          #modelbest
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/tutorial/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/tutorial/">
+          #tutorial
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/chatgpt/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/chatgpt/">
+          #chatgpt
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/claude/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/claude/">
+          #claude
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E4%B8%89%E4%BD%93/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E4%B8%89%E4%BD%93/">
+          #三体
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/algorithm/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/algorithm/">
+          #algorithm
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/binary-search/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/binary-search/">
+          #binary-search
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/rust/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/rust/">
+          #rust
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/python/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/python/">
+          #python
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/c/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/c/">
+          #c++
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/test/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/test/">
+          #test
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/code/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/code/">
+          #code
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/school/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/school/">
+          #school
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/graduation/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/graduation/">
+          #graduation
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/blog/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/blog/">
+          #blog
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E7%AD%BE%E8%AF%81/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E7%AD%BE%E8%AF%81/">
+          #签证
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/hexo/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/hexo/">
+          #hexo
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/hugo/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/hugo/">
+          #hugo
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/jekyll/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/jekyll/">
+          #jekyll
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/static-site-generator/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/static-site-generator/">
+          #static-site-generator
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×2
+          </span>
+        </a>
+      
+        <a href="/tags/%E7%BE%BD%E6%AF%9B%E7%90%83/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E7%BE%BD%E6%AF%9B%E7%90%83/">
+          #羽毛球
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/work/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/work/">
+          #work
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E6%9E%AB%E5%8F%B6/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E6%9E%AB%E5%8F%B6/">
+          #枫叶
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E4%B8%AD%E5%9B%BD/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E4%B8%AD%E5%9B%BD/">
+          #中国
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E6%8C%AA%E5%A8%81/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E6%8C%AA%E5%A8%81/">
+          #挪威
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/markdown/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/markdown/">
+          #markdown
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%AE%BF%E8%88%8D/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%AE%BF%E8%88%8D/">
+          #宿舍
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/html/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/html/">
+          #html
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/liquid/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/liquid/">
+          #liquid
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%AD%A9%E5%AD%90%E4%BB%AC/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%AD%A9%E5%AD%90%E4%BB%AC/">
+          #孩子们
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%8D%A7%E9%BE%99/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%8D%A7%E9%BE%99/">
+          #卧龙
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%87%A4%E9%9B%8F/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%87%A4%E9%9B%8F/">
+          #凤雏
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E9%AA%86%E9%9B%81/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E9%AA%86%E9%9B%81/">
+          #骆雁
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E9%BB%84%E5%B8%9D/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E9%BB%84%E5%B8%9D/">
+          #黄帝
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%B0%8F%E7%BB%BF/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%B0%8F%E7%BB%BF/">
+          #小绿
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E7%8C%AB%E5%92%AA/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E7%8C%AB%E5%92%AA/">
+          #猫咪
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%9C%9F%E9%B8%A1/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%9C%9F%E9%B8%A1/">
+          #土鸡
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E7%86%8A/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E7%86%8A/">
+          #熊
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%F0%9F%90%BB/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%F0%9F%90%BB/">
+          #🐻
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%F0%9F%90%B1/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%F0%9F%90%B1/">
+          #🐱
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%F0%9F%90%87/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%F0%9F%90%87/">
+          #🐇
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%F0%9F%90%B0/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%F0%9F%90%B0/">
+          #🐰
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%F0%9F%90%8A/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%F0%9F%90%8A/">
+          #🐊
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/emoren/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/emoren/">
+          #emoren
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/acl/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/acl/">
+          #acl
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/lillesand/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/lillesand/">
+          #lillesand
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+        <a href="/tags/%E5%8A%A0%E6%8B%BF%E5%A4%A7/"
+          class="
+            tag
+            flex flex-row items-center
+            text-[16px]
+            px-[8px]
+            py-[2px]
+            rounded-full
+            drop-shadow-md
+            border-[1px]
+            border-[var(--c-theme)]
+            text-[var(--c-theme)]
+            bg-[var(--c-0)]
+            dark:bg-[var(--c-0)]
+            dark:drop-shadow-none
+            hover:bg-[var(--c-theme)]
+            dark:hover:bg-[var(--c-theme)]
+            hover:text-[var(--c-0)]
+          "
+          href="/tags/%E5%8A%A0%E6%8B%BF%E5%A4%A7/">
+          #加拿大
+          <span class="
+            text-[var(--c-50)]
+            dark:text-[var(--c-70)]
+            hover:dark:text-[var(--c-80)]
+            hover:text-[var(--c-20)]
+            pl-1
+            text-sm">
+            ×1
+          </span>
+        </a>
+      
+    </div>
+  </div>
+
+
+  </main>
+  <footer class="flex flex-col mt-18 mb-12 items-center
+  text-[var(--c-50)] text-sm">
+  <div class="flex flex-row items-center my-12">
+    
+    
+        
+        
+            
+            
+        
+        <a class="
+            hover:text-[var(--c-theme)]
+            hover:bg-[var(--c-20)]
+            rounded-lg
+            p-2
+            my-1
+            flex flex-row items-center
+            group" title="Github" target="_blank" rel="noopener" href="https://www.github.com/chen-yingfa">
+            <iconify-icon width="28" icon="mingcute:github-fill"></iconify-icon>
+        </a>
+    
+        
+        
+            
+            
+        
+        <a class="
+            hover:text-[var(--c-theme)]
+            hover:bg-[var(--c-20)]
+            rounded-lg
+            p-2
+            my-1
+            flex flex-row items-center
+            group" title="ZhiHu" target="_blank" rel="noopener" href="https://www.zhihu.com/people/chen-ying-fa-34">
+            <iconify-icon width="28" icon="ri:zhihu-line"></iconify-icon>
+        </a>
+    
+        
+        
+            
+            
+        
+        <a class="
+            hover:text-[var(--c-theme)]
+            hover:bg-[var(--c-20)]
+            rounded-lg
+            p-2
+            my-1
+            flex flex-row items-center
+            group" title="Twitter" target="_blank" rel="noopener" href="https://www.twitter.com/DonnyChan123">
+            <iconify-icon width="28" icon="mingcute:social-x-fill"></iconify-icon>
+        </a>
+    
+
+  </div>
+  <!-- busuanzi -->
+  <div class="mb-6">
+    
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- Busuanzi Analytics -->
+<div class="flex flex-col items-center mb-2">
+  <div class="flex flex-row items-center">
+    <iconify-icon width="16" icon="ic:round-person" width="18"></iconify-icon>
+    <span class="mr-1">访客 Visitors: </span>
+    <span id="busuanzi_value_site_uv"></span>
+  </div>
+  <div class="flex flex-row items-center">
+    <iconify-icon width="16" icon="carbon:view-filled" width="18"></iconify-icon>
+    <span class="mx-1">浏览量 Page Views:</span>
+    <span id="busuanzi_value_site_pv"></span>
+  </div>
+</div>
+<!-- End Busuanzi Analytics -->
+
+
+  </div>
+  <!-- copyright -->
+  <div class="flex flex-row items-center gap-2">
+    <a class="hover:underline"
+      target="_blank"
+      href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+    >
+      CC BY-NC-SA 4.0
+    </a>
+    <span>© 2022-2024</span>
+    <a class="hover:underline"
+    href="https://github.com/chen-yingfa" 
+    target="_blank" 
+    rel="noopener noreferrer">陈英发</a>
+  </div>
+  <!-- powered by -->
+  <div class="flex items-center gap-1">
+    <span>Powered by</span>
+    <a class="hover:underline" 
+    href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>
+    <span>&</span>
+    <a href="https://github.com/chen-yingfa/hexo-theme-fengye" 
+    class="hover:underline"
+    target="_blank"
+      rel="noopener noreferrer"
+      >
+      枫叶 Fengye
+    </a>
+  </div>
+
+</footer>
+
+  <div class="
+    back-to-top
+    fixed right-6
+    z-1024
+    -bottom-20
+    rounded-lg
+    font-bold
+    py-1 px-2
+    text-[var(--c-80)]
+    bg-[var(--c-20)]
+    cursor-pointer
+    text-center
+    drop-shadow-md
+  ">
+    <span class="flex justify-center items-center text-sm">
+      <span id="scrollpercent"><span>0</span> %</span>
+      <iconify-icon width="18" icon="mingcute:arrow-to-up-fill" id="go-top"></iconify-icon>
+    </span>
+  </div>
+  
+<script src="/js/main.js"></script>
+
+
+  <div class="fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden" id="maple"></div>
+</body>
+
+</html>
