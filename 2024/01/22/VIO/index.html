@@ -24,7 +24,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
   <meta name="keywords" content="Tianxiao Ye,叶天霄,Robotics,Artificial Intelligence">
 
 
-<title>Archives | Tianxiao Ye</title>
+<title>Real Time Visual Inertial Odometry system | Tianxiao Ye</title>
 
 
 
@@ -516,101 +516,73 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
   </div>
 </div>
   <main>
-    <section class="px-2 py-8 max-w-prose mx-auto gap-4 grid grid-cols-1">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
   
-  <!-- Sort posts by date -->
-  
-  
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+    <!-- toc -->
     
-    <!-- Large text showing the year in the background -->
-    
-      <div class="relative pointer-events-none h-[30px]">
-        <div class="absolute -top-6 w-[100%]">
-          <p class="
-            text-clip overflow-hidden -translate-x-3 text-9xl
-            font-extrabold
-            text-[var(--c-theme)]
-            opacity-10
-            dark:opacity-20">
-            2024
-          </p>
-        </div>
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-40 relative top-32 right-4 opacity-70 hidden lg:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-prose mx-auto md:px-0">
+  <!-- Post header before content -->
+  <header class="py-4">
+    <div class="flex flex-col gap-2 pt-4 md:pt-6">
+      <!-- Title -->
+      <div id="article-title" class="leading-snug">
+        <p class="text-3xl font-bold text-[var(--c-100)] mb-4">Real Time Visual Inertial Odometry system</p>
       </div>
-    
-    <!-- The post -->
-    <div class="w-full">
-      <!-- One post item in a list -->
-<div class="
-    post-container
-    px-2 py-2
-    flex flex-col gap-3">
-    <div class="flex flex-row gap-4">
-        
-            <div class="flex flex-col gap-1">
-                <!-- Post title -->
-                <a href="/2024/01/22/VIO/">
-                    <h2 class="
-                        text-[var(--c-80)]
-                        font-bold
-                        text-xl
-                        hover:text-[var(--c-theme)]
-                        transition-all
-                        hover:underline">
-                        Real Time Visual Inertial Odometry system
-                    </h2>
-                </a>
-            <!-- Post excerpt -->
-            
+      <!-- Meta data -->
+      <div>
+        <section class="
+          flex flex-col gap-x-2 gap-y-1 text-sm text-[var(--c-100)]">
+          <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <!-- Dates -->
+            <div class="flex items-center gap-1">
+              <iconify-icon width="18" icon="mingcute:add-circle-fill" ></iconify-icon>
+              Created: <time class="w-max">2024-01-22</time>
             </div>
-        </div>
-        <!-- Post Statistics -->
-        <div class="flex flex-wrap items-center gap-x-2 text-sm
-            text-[var(--c-70)]">
-            <span class="flex flex-row items-center gap-1 group">
-                <iconify-icon width="16"
-                    icon="mingcute:add-circle-fill"></iconify-icon>
-                <time class="w-max">
-                    2024-01-22
-                </time>
-            </span>
-            <span class="flex flex-row items-center gap-1 group">
-                <iconify-icon width="16"
-                    icon="mingcute:refresh-3-fill"></iconify-icon>
-                <time class="w-max">
-                    2024-06-01
-                </time>
-            </span>
-            <span class="flex flex-row items-center gap-1 group">
-                <iconify-icon width="16"
-                    icon="mingcute:book-2-fill"></iconify-icon>
-                <p class="w-max">
-                    331 words, 2 min
-                </p>
+            <div class="flex items-center gap-1">
+              <iconify-icon width="18" icon="mingcute:refresh-3-fill" ></iconify-icon>
+              Edited: <time class="w-max">2024-06-01</time>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-3">
+            <!-- Author -->
+            
+              <span class="flex items-center gap-1 group">
+                <iconify-icon width="18" icon="mingcute:user-edit-fill" ></iconify-icon>
+                <p>Tianxiao Ye</p>
+              </span>
+            
+
+            <!-- Word count -->
+            <span class="flex items-center gap-1">
+              <iconify-icon width="18" icon="mingcute:book-2-fill" ></iconify-icon>
+              <span>331 words, 2 min</span>
             </span>
             <!-- Categories -->
-            <span class="flex flex-row items-center gap-1 group">
-                
-                    <iconify-icon class="
-                            group-hover:scale-125
-                            transition-transform
-                            group-hover:text-[var(--c-theme)]
-                        "
-                        width="16"
-                        icon="mingcute:classify-2-fill" class="mr-0">
-                    </iconify-icon>
-                    
-                        <a class="underline underline-offset-2"
-                            href="/categories/project/">
-                            Project
-                        </a>
-                    
-                
-            </span>
-        </div>
-        <!-- Tags -->
-        <div>
             
-                
+              <!-- <span class="text-gray-400">·</span> -->
+              <span class="flex flex-row items-center gap-1 group hover:underline">
+                <iconify-icon class="transition-all group-hover:scale-125 mr-0"
+                  width="18"
+                  icon="mingcute:classify-2-fill">
+                </iconify-icon>
+                <a class="article-category-link" href="/categories/project/">Project</a>
+              </span>
+            
+          </div>
+        </section>
+      </div>
+      <!-- tags -->
+      <div>
+        
 <div class="flex flex-wrap gap-1">
   
     
@@ -673,307 +645,153 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
     
   
 </div>
-            
-        </div>
-</div>
-    </div>
-  
-    
-    <!-- Large text showing the year in the background -->
-    
-      <div class="relative pointer-events-none h-[30px]">
-        <div class="absolute -top-6 w-[100%]">
-          <p class="
-            text-clip overflow-hidden -translate-x-3 text-9xl
-            font-extrabold
-            text-[var(--c-theme)]
-            opacity-10
-            dark:opacity-20">
-            2023
-          </p>
-        </div>
       </div>
-    
-    <!-- The post -->
-    <div class="w-full">
-      <!-- One post item in a list -->
-<div class="
-    post-container
-    px-2 py-2
-    flex flex-col gap-3">
-    <div class="flex flex-row gap-4">
-        
-            <div class="flex flex-col gap-1">
-                <!-- Post title -->
-                <a href="/2023/12/05/f1tenth/">
-                    <h2 class="
-                        text-[var(--c-80)]
-                        font-bold
-                        text-xl
-                        hover:text-[var(--c-theme)]
-                        transition-all
-                        hover:underline">
-                        F1tenth Racing Simulator
-                    </h2>
-                </a>
-            <!-- Post excerpt -->
-            
-            </div>
-        </div>
-        <!-- Post Statistics -->
-        <div class="flex flex-wrap items-center gap-x-2 text-sm
-            text-[var(--c-70)]">
-            <span class="flex flex-row items-center gap-1 group">
-                <iconify-icon width="16"
-                    icon="mingcute:add-circle-fill"></iconify-icon>
-                <time class="w-max">
-                    2023-12-05
-                </time>
-            </span>
-            <span class="flex flex-row items-center gap-1 group">
-                <iconify-icon width="16"
-                    icon="mingcute:refresh-3-fill"></iconify-icon>
-                <time class="w-max">
-                    2024-06-01
-                </time>
-            </span>
-            <span class="flex flex-row items-center gap-1 group">
-                <iconify-icon width="16"
-                    icon="mingcute:book-2-fill"></iconify-icon>
-                <p class="w-max">
-                    1k words, 6 min
-                </p>
-            </span>
-            <!-- Categories -->
-            <span class="flex flex-row items-center gap-1 group">
-                
-                    <iconify-icon class="
-                            group-hover:scale-125
-                            transition-transform
-                            group-hover:text-[var(--c-theme)]
-                        "
-                        width="16"
-                        icon="mingcute:classify-2-fill" class="mr-0">
-                    </iconify-icon>
-                    
-                        <a class="underline underline-offset-2"
-                            href="/categories/project/">
-                            Project
-                        </a>
-                    
-                
-            </span>
-        </div>
-        <!-- Tags -->
-        <div>
-            
-                
-<div class="flex flex-wrap gap-1">
-  
-    
-      <a href="/tags/f1tenth/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        F1tenth
-      </a>
-    
-      <a href="/tags/wall-following/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        Wall following
-      </a>
-    
-      <a href="/tags/follow-the-gap/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        Follow the Gap
-      </a>
-    
-      <a href="/tags/scan-matching/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        Scan matching
-      </a>
-    
-      <a href="/tags/pure-pursuit/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        Pure Pursuit
-      </a>
-    
-      <a href="/tags/hector-slam/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        Hector SLAM
-      </a>
-    
-      <a href="/tags/peb-path-planning/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        PEB path planning
-      </a>
-    
-      <a href="/tags/gazebo/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        Gazebo
-      </a>
-    
-      <a href="/tags/rviz/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        Rviz
-      </a>
-    
-      <a href="/tags/first-project/" 
-        class="
-          tag
-          text-sm
-          rounded-full
-          px-[5px]
-          border-[1px]
-          border-[var(--c-theme)]
-          text-[var(--c-theme)]
-          bg-[var(--c-0)]
-          dark:bg-[var(--c-0)]
-          dark:drop-shadow-none
-          hover:bg-[var(--c-theme)]
-          hover:text-[var(--c-0)]
-          dark:hover:text-[var(--c-theme-2)]
-        ">
-        First Project
-      </a>
-    
-  
-</div>
-            
-        </div>
-</div>
     </div>
-  
+  </header>
+  <!-- content -->
+  <article class="post-content prose m-auto dark:prose-invert">
+    <p><em>refer to: <a target="_blank" rel="noopener" href="https://docs.openvins.com/">https://docs.openvins.com/</a></em></p>
+<h1 id="Executive-Summary"><a href="#Executive-Summary" class="headerlink" title="Executive Summary"></a>Executive Summary</h1><p>This report outlines the systematic implementation of a real-time Visual Inertial Odometry (VIO) system utilizing the ZED2i camera. The system is designed to provide high-accuracy motion tracking for robotics and augmented reality applications. Key phases of the implementation included setting up a compatible hardware and software environment, installing and configuring necessary software packages, and calibrating the system to ensure optimal performance.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8VGnhSgjAO0?si=7r9bwbavJxS-MXEe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h1 id="System-Requirements"><a href="#System-Requirements" class="headerlink" title="System Requirements"></a>System Requirements</h1><p>The implementation was carried out on a system equipped with Ubuntu 20.04 and ROS Noetic, chosen for their stability and compatibility with the ZED2i camera. The hardware specifications were selected to support the intensive computational demands of real-time odometry and data processing.</p>
+<h1 id="Software-Installation-and-Setup"><a href="#Software-Installation-and-Setup" class="headerlink" title="Software Installation and Setup"></a>Software Installation and Setup</h1><p>The ZED Software Development Kit (SDK) was installed to facilitate camera integration. Following this, the ZED ROS package was deployed to enable the camera’s data to be utilized within the ROS ecosystem. These installations ensured that the camera’s video and depth data could be effectively captured and published as ROS topics.</p>
+<h1 id="Calibration-Process"><a href="#Calibration-Process" class="headerlink" title="Calibration Process"></a>Calibration Process</h1><p>Calibration was performed using Kalibr, alongside the Allan variance tool integrated within ROS, to calibrate the ZED2i camera and its inertial measurement units (IMU). This calibration was crucial for refining the accuracy of the sensors and ensuring that the VIO system could reliably interpret sensory data in real time.</p>
+<h1 id="Visual-Inertial-System-Integration"><a href="#Visual-Inertial-System-Integration" class="headerlink" title="Visual-Inertial System Integration"></a>Visual-Inertial System Integration</h1><p>OpenVINS, an open-source visual-inertial estimator, was installed to process the visual and inertial data. The software was configured specifically for our hardware and the output from the calibration phase. This integration facilitated the real-time estimation of position, orientation, and velocity, which are pivotal for the precise navigation and interaction capabilities required in robotics and augmented reality.</p>
+<h1 id="Operational-Results"><a href="#Operational-Results" class="headerlink" title="Operational Results"></a>Operational Results</h1><p>Upon running the integrated system, initial tests demonstrated successful real-time tracking with minimal latency. The system’s ability to accurately track motion in a variety of conditions was verified through several experimental setups, highlighting the efficacy of the calibration and the robustness of the VIO algorithm.</p>
+
+  </article>
+
+  <!-- prev and next -->
+  <div class="flex justify-between mt-4 pt-4
+    border-t border-[var(--c-sep)] text-sm
+    gap-2 text-[var(--c-50)]
+  ">
+    <div>
+      
+    </div>
+    <div>
+      
+        <a href="/2023/12/05/f1tenth/"
+          class="
+            flex 
+            justify-center
+            hover:translate-x-1 
+            transition-transform
+            hover:text-[var(--c-100)]
+          "
+        >
+          F1tenth Racing Simulator
+          <iconify-icon width="20" icon="mingcute:right-fill" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+
+  <!-- comment -->
+  <div class="article-comments mt-12">
+    
+
+  </div>
 </section>
+<!-- js inspect -->
 
-<div class="border-t border-[--c-40]">
+<script src="/lib/clipboard.min.js"></script>
 
-</div>
 
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        var title = this.title;
+        if (alt) $(this).after('<span class="fancybox-alt">' + alt + '</span>');
+        if (title) $(this).after('<span class="fancybox-title">' + title + '</span>');
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
 
   </main>
   <footer class="flex flex-col mt-18 mb-12 items-center
