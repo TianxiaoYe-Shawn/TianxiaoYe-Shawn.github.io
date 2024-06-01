@@ -793,36 +793,36 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
 <img src="/images/f1tenth/1.png"/>
 
 <p>In the context of our car, the desired distance to the wall should be our set point for our controller, which means our error is the difference between the desired and actual distance to the wall. This raises an important question: how do we measure the distance to the wall, and at what point in time? One option would simply be to consider the distance to the right wall at the current time  (let’s call it <strong>Dt</strong>). Let’s consider a generic orientation of the car with respect to the right wall and suppose the angle between the car’s x-axis and the axis in the direction along the wall is denoted by <strong>α</strong>. We will obtain two laser scans (distances) to the wall: one 90 degrees to the right of the car’s x-axis (beam <strong>b</strong> in the figure), and one (beam <strong>a</strong>) at an angle <strong>θ</strong> ( <strong>0&lt; θ ≤70</strong> degrees) to the first beam. Suppose these two laser scans return distances <strong>a</strong> and <strong>b</strong>, respectively.</p>
-<p>we can express <strong>α</strong> as:<br>$$<br>α&#x3D;tan^{-1}(\frac{acos(θ)-b}{asin(θ)})<br>$$<br>We can then express <strong>𝐷𝑡</strong> as:<br>$$<br>D_t&#x3D;bcos(α)<br>$$<br><img src="../images/f1tenth/2.png"/></p>
+<p>we can express <strong>α</strong> as:<br>$$<br>α&#x3D;tan^{-1}(\frac{acos(θ)-b}{asin(θ)})<br>$$<br>We can then express <strong>𝐷𝑡</strong> as:<br>$$<br>D_t&#x3D;bcos(α)<br>$$<br><img src="/images/f1tenth/2.png"/></p>
 <p>However, we have a problem on our hands. Remember that this is a race: your car will be traveling at a high speed and therefore will have a non-instantaneous response to whatever speed and servo control you give to it. If we simply use the current distance to the wall, we might end up turning too late, and the car may crash. Therefore, we must look to the future and project the car ahead by a certain lookahead distance (let’s call it <strong>𝐿</strong>). Our new distance <strong>𝐷𝑡+1</strong> will then be:<br>$$<br>D_{t+1}&#x3D;D_t+Lsin(α)<br>$$</p>
 <h2 id="2-Follow-the-Gap"><a href="#2-Follow-the-Gap" class="headerlink" title="2. Follow the Gap"></a>2. Follow the Gap</h2><p>Follow the Gap is a reactive navigation strategy that identifies the largest ‘gap’ in a field of obstacles and directs the vehicle through it. This method is particularly useful in cluttered environments, where traditional path planning methods might struggle. The algorithm processes LIDAR data to detect open spaces, dynamically adjusting the vehicle’s trajectory to navigate through these gaps safely.</p>
-<img src="../images/f1tenth/3.png"/>
+<img src="/images/f1tenth/3.png"/>
 
-<img src="../images/f1tenth/4.png"/>
+<img src="/images/f1tenth/4.png"/>
 
-<img src="../images/f1tenth/5.png"/>
+<img src="/images/f1tenth/5.png"/>
 
 
 
 <h2 id="3-Scan-Matching"><a href="#3-Scan-Matching" class="headerlink" title="3. Scan Matching"></a>3. Scan Matching</h2><p>Scan Matching involves comparing the current scan from LIDAR sensors with a previously known map to determine the vehicle’s position. This algorithm is integral to accurate localization, which is crucial for consistent performance in environments with complex geometries. By continuously updating the vehicle’s position and orientation, scan matching enhances the overall stability and reliability of the navigation system.</p>
-<img src="../images/f1tenth/6.png"/>
+<img src="/images/f1tenth/6.png"/>
 
-<img src="../images/f1tenth/7.png"/>
+<img src="/images/f1tenth/7.png"/>
 
-<img src="../images/f1tenth/8.png"/>
+<img src="/images/f1tenth/8.png"/>
 
 
 
 <h2 id="4-Pure-Pursuit"><a href="#4-Pure-Pursuit" class="headerlink" title="4. Pure Pursuit"></a>4. Pure Pursuit</h2><p>Pure Pursuit is a path tracking algorithm that computes the necessary steering commands to follow a predefined path. The algorithm uses a ‘look-ahead’ point on the desired path and calculates the curvature that will guide the vehicle to this point. This approach is straightforward yet effective, making it widely used in the field of autonomous driving.</p>
-<img src="../images/f1tenth/9.png"/>
+<img src="/images/f1tenth/9.png"/>
 
-<img src="../images/f1tenth/10.png"/>
+<img src="/images/f1tenth/10.png"/>
 
 <h2 id="5-Hector-SLAM"><a href="#5-Hector-SLAM" class="headerlink" title="5. Hector SLAM"></a>5. Hector SLAM</h2><p>Hector SLAM (Simultaneous Localization and Mapping) is an algorithm that builds a map of the environment while simultaneously keeping track of the vehicle’s location within it. Unlike other SLAM techniques, Hector SLAM can perform well in environments lacking distinctive features and does not require odometry data, making it well-suited for vehicles equipped solely with LIDAR.</p>
-<img src="../images/f1tenth/11.png"/>
+<img src="/images/f1tenth/11.png"/>
 
 <h2 id="6-PEB-Path-Planning"><a href="#6-PEB-Path-Planning" class="headerlink" title="6. PEB Path Planning"></a>6. PEB Path Planning</h2><p>PEB (Predict, Evaluate, Build) Path Planning is an advanced algorithm that anticipates potential paths, evaluates them based on a set of predefined criteria, and then selects the most optimal route. This method not only considers the immediate path but also anticipates future obstacles, effectively enhancing navigational decisions in dynamic environments.</p>
-<img src="../images/f1tenth/12.png"/>
+<img src="/images/f1tenth/12.png"/>
 
 <p><strong>Predict</strong>:</p>
 <ul>
