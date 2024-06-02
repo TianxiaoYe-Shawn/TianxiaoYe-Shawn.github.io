@@ -545,7 +545,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
             <!-- Dates -->
             <div class="flex items-center gap-1">
               <iconify-icon width="18" icon="mingcute:add-circle-fill" ></iconify-icon>
-              Created: <time class="w-max">2024-05-25</time>
+              Created: <time class="w-max">2024-05-15</time>
             </div>
             <div class="flex items-center gap-1">
               <iconify-icon width="18" icon="mingcute:refresh-3-fill" ></iconify-icon>
@@ -564,7 +564,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
             <!-- Word count -->
             <span class="flex items-center gap-1">
               <iconify-icon width="18" icon="mingcute:book-2-fill" ></iconify-icon>
-              <span>991 words, 6 min</span>
+              <span>995 words, 6 min</span>
             </span>
             <!-- Categories -->
             
@@ -731,7 +731,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fyGHxzgEz0o?si=VZve3lWYjZkNh9NA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 <p>The MPC solution frequency is 10HZ.</p>
-<p>The system only uses the kinematic model:<br>$$<br> \begin{bmatrix} \dot{x} \ \dot{y} \ \dot{\theta} \end{bmatrix} &#x3D;  \begin{bmatrix} v \cos(\theta) \ v \sin(\theta) \ w \end{bmatrix}<br>$$<br>The MPC optimal control model is here:<br>$$<br>\begin{aligned}<br>\text{minimize} \quad &amp; \sum_{k&#x3D;0}^{N-1} \left( (x_k - x_{\text{ref},k})^T Q (x_k - x_{\text{ref},k}) + u_k^T R u_k \right)  + (x_N - x_{\text{ref},N})^T Q (x_N - x_{\text{ref},N}) \<br>\text{subject to} \quad &amp; x_{k+1} &#x3D; x_k + \Delta t \cdot f(x_k, u_k), \quad \forall k \in {0, \ldots, N-1} \<br>&amp; x_0 &#x3D; x_{\text{initial}}, \<br>&amp; 0 \leq v \leq u_{\text{max}}, \<br>&amp; w_{\text{min}} \leq w \leq w_{\text{max}}.<br>\end{aligned}<br>$$<br><strong>Objective of Minimization</strong>: The goal is to make the system’s behavior (its state at various points in time) closely follow a predefined desired path or set of states, known as the reference trajectory. This involves:</p>
+<p>The system only uses the kinematic model:<br>$$<br>\begin{split}  \begin{bmatrix} \dot{x} \ \dot{y} \ \dot{\theta} \end{bmatrix} &#x3D;  \begin{bmatrix} v \cos(\theta) \ v \sin(\theta) \ w \end{bmatrix} \end{split}<br>$$<br>The MPC optimal control model is here:<br>$$<br>\begin{aligned}<br>\text{minimize} \quad &amp; \sum_{k&#x3D;0}^{N-1} \left( (x_k - x_{\text{ref},k})^T Q (x_k - x_{\text{ref},k}) + u_k^T R u_k \right)  + (x_N - x_{\text{ref},N})^T Q (x_N - x_{\text{ref},N}) \<br>\text{subject to} \quad &amp; x_{k+1} &#x3D; x_k + \Delta t \cdot f(x_k, u_k), \quad \forall k \in {0, \ldots, N-1} \<br>&amp; x_0 &#x3D; x_{\text{initial}}, \<br>&amp; 0 \leq v \leq u_{\text{max}}, \<br>&amp; w_{\text{min}} \leq w \leq w_{\text{max}}.<br>\end{aligned}<br>$$<br><strong>Objective of Minimization</strong>: The goal is to make the system’s behavior (its state at various points in time) closely follow a predefined desired path or set of states, known as the reference trajectory. This involves:</p>
 <ul>
 <li><strong>Reducing State Errors</strong>: The system tries to keep its states (like position, velocity) as close as possible to these reference states at each step of the prediction. The closer the system’s actual state is to the reference, the better the performance.</li>
 <li><strong>Controlling Input Usage</strong>: At the same time, the system seeks to use its control inputs (like thrust or steering angle) efficiently. High input usage can mean higher energy consumption and wear and tear, which the system tries to minimize.</li>
