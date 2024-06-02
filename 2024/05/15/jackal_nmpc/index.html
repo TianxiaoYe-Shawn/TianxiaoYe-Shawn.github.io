@@ -564,7 +564,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
             <!-- Word count -->
             <span class="flex items-center gap-1">
               <iconify-icon width="18" icon="mingcute:book-2-fill" ></iconify-icon>
-              <span>991 words, 6 min</span>
+              <span>995 words, 6 min</span>
             </span>
             <!-- Categories -->
             
@@ -731,7 +731,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fyGHxzgEz0o?si=VZve3lWYjZkNh9NA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 <p>The MPC solution frequency is 10HZ.</p>
-<p>The system only uses the kinematic model:<br>$$<br>\begin{bmatrix} \dot{x} \\ \dot{y} \\ \dot{\theta} \end{bmatrix} &#x3D;  \begin{bmatrix} v \cos(\theta) \\ v \sin(\theta) \\ w \end{bmatrix}<br>$$<br>The MPC optimal control model is here:<br>$$<br>\begin{aligned}<br>\text{minimize} \quad &amp; \sum_{k&#x3D;0}^{N-1} \left( (x_k - x_{\text{ref},k})^T Q (x_k - x_{\text{ref},k}) + u_k^T R u_k \right)  + (x_N - x_{\text{ref},N})^T Q (x_N - x_{\text{ref},N}) \<br>\text{subject to} \quad &amp; x_{k+1} &#x3D; x_k + \Delta t \cdot f(x_k, u_k), \quad \forall k \in {0, \ldots, N-1} \<br>&amp; x_0 &#x3D; x_{\text{initial}}, \<br>&amp; 0 \leq v \leq u_{\text{max}}, \<br>&amp; w_{\text{min}} \leq w \leq w_{\text{max}}.<br>\end{aligned}<br>$$<br><strong>Objective of Minimization</strong>: The goal is to make the system’s behavior (its state at various points in time) closely follow a predefined desired path or set of states, known as the reference trajectory. This involves:</p>
+<p>The system only uses the kinematic model:<br>$$<br>\begin{bmatrix} \dot{x} \\ \dot{y} \\ \dot{\theta} \end{bmatrix} &#x3D;  \begin{bmatrix} v \cos(\theta) \\ v \sin(\theta) \\ w \end{bmatrix}<br>$$<br>The MPC optimal control model is here:<br>$$<br>\begin{aligned}<br>\text{minimize} \quad &amp; \sum_{k&#x3D;0}^{N-1} \left( (x_k - x_{\text{ref},k})^T Q (x_k - x_{\text{ref},k}) + u_k^T R u_k \right)  + (x_N - x_{\text{ref},N})^T Q (x_N - x_{\text{ref},N}) \\<br>\text{subject to} \quad &amp; x_{k+1} &#x3D; x_k + \Delta t \cdot f(x_k, u_k), \quad \forall k \in {0, \ldots, N-1} \\<br>&amp; x_0 &#x3D; x_{\text{initial}}, \\<br>&amp; 0 \leq v \leq u_{\text{max}}, \\<br>&amp; w_{\text{min}} \leq w \leq w_{\text{max}}.<br>\end{aligned}<br>$$<br><strong>Objective of Minimization</strong>: The goal is to make the system’s behavior (its state at various points in time) closely follow a predefined desired path or set of states, known as the reference trajectory. This involves:</p>
 <ul>
 <li><strong>Reducing State Errors</strong>: The system tries to keep its states (like position, velocity) as close as possible to these reference states at each step of the prediction. The closer the system’s actual state is to the reference, the better the performance.</li>
 <li><strong>Controlling Input Usage</strong>: At the same time, the system seeks to use its control inputs (like thrust or steering angle) efficiently. High input usage can mean higher energy consumption and wear and tear, which the system tries to minimize.</li>
@@ -742,9 +742,13 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
 <p><strong>Respecting Input Limits</strong>: The control inputs are kept within practical limits. For instance, the system cannot accelerate or rotate beyond what it’s physically capable of, ensuring safety and avoiding damage.</p>
 <h2 id="Trajectory-Tracking-Using-CppAD-Ipopt"><a href="#Trajectory-Tracking-Using-CppAD-Ipopt" class="headerlink" title="Trajectory Tracking Using CppAD &amp; Ipopt"></a>Trajectory Tracking Using CppAD &amp; Ipopt</h2><p>Wrote an MPC controller using CppAD and Ipopt to solve the non-linear optimal control problem and let the car of the Jackal Gazebo simulator to track a figure-8 trajectory.</p>
 <p>code: <a target="_blank" rel="noopener" href="https://github.com/wisc-arclab/JACKAL_UGV/tree/CppAD/Ipopt-NMPC">https://github.com/wisc-arclab/JACKAL_UGV/tree/CppAD/Ipopt-NMPC</a></p>
+<p>Real world:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/j5wSrnwOiUY?si=3-WKk24-8qVEk_vu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<p>Simulation:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vMgzhEvTk5M?si=E6Kbj1OCOyoDX9LN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-<h3 id="State-Parameters-and-Control-Vectors"><a href="#State-Parameters-and-Control-Vectors" class="headerlink" title="State Parameters and Control Vectors"></a>State Parameters and Control Vectors</h3><h4 id="State-Parameter-Vector"><a href="#State-Parameter-Vector" class="headerlink" title="State Parameter Vector"></a>State Parameter Vector</h4><p>$$<br>\mathbf{x}_t &#x3D; \begin{bmatrix}<br>x_t \<br>y_t \<br>\theta_t \<br>v_t \<br>cte_t \<br>e\theta_t<br>\end{bmatrix}<br>$$</p>
+<h3 id="State-Parameters-and-Control-Vectors"><a href="#State-Parameters-and-Control-Vectors" class="headerlink" title="State Parameters and Control Vectors"></a>State Parameters and Control Vectors</h3><p><strong>State Parameter Vector</strong><br>$$<br>\mathbf{x}_t &#x3D; \begin{bmatrix}<br>x_t \\<br>y_t \\<br>\theta_t \\<br>v_t \\<br>cte_t \\<br>e\theta_t<br>\end{bmatrix}<br>$$</p>
 <p>Where:</p>
 <ul>
 <li>$x_t$ and $y_t$ represent the vehicle’s position coordinates.</li>
@@ -753,37 +757,28 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
 <li>$cte_t$ (Cross Track Error) measures the lateral distance between the vehicle and the reference trajectory.</li>
 <li>$e\theta_t$ (Error in Theta) represents the orientation error relative to the trajectory’s tangent at the vehicle’s current position.</li>
 </ul>
-<h4 id="Control-Vector"><a href="#Control-Vector" class="headerlink" title="Control Vector"></a>Control Vector</h4><p>$$<br>\mathbf{u}_t &#x3D; \begin{bmatrix}<br>\omega_t \<br>a_t<br>\end{bmatrix}<br>$$</p>
+<p><strong>Control Vector</strong><br>$$<br>\mathbf{u}_t &#x3D; \begin{bmatrix}<br>\omega_t \\<br>a_t<br>\end{bmatrix}<br>$$</p>
 <p>Where:</p>
 <ul>
 <li>$\omega_t$ is the angular velocity, which affects the vehicle’s heading.</li>
 <li>$a_t$ is the acceleration, controlling the speed increase or decrease.</li>
 </ul>
 <p>These control inputs are used to predict and optimize the vehicle’s trajectory over the prediction horizon, ensuring adherence to the desired path while maintaining dynamic stability and safety.</p>
-<h2 id="Total-Cost-Function"><a href="#Total-Cost-Function" class="headerlink" title="Total Cost Function"></a>Total Cost Function</h2><p>The total cost function (J) is defined as:</p>
-<p>[<br>J &#x3D; \sum_{i&#x3D;0}^{N-1} \left( w_{cte} (cte_i - ref_{cte})^2 + w_{\theta} (e\theta_i - ref_{\theta})^2 + w_v (v_i - ref_v)^2 \right)<br>]</p>
-<p>[</p>
+<h3 id="Total-Cost-Function"><a href="#Total-Cost-Function" class="headerlink" title="Total Cost Function"></a>Total Cost Function</h3><p>The total cost function $J$ is defined as:</p>
+<p>$$<br>J &#x3D; \sum_{i&#x3D;0}^{N-1} \left( w_{cte} (cte_i - ref_{cte})^2 + w_{\theta} (e\theta_i - ref_{\theta})^2 + w_v (v_i - ref_v)^2 \right) +\\ \sum_{i&#x3D;0}^{N-2} \left( w_{angvel} angvel_i^2 + w_{accel} accel_i^2 \right) +\\ \sum_{i&#x3D;0}^{N-3} \left( w_{angvel_d} (angvel_{i+1} - angvel_i)^2 + w_{accel_d} (accel_{i+1} - accel_i)^2 \right)<br>$$<br>Where:</p>
 <ul>
-<li>\sum_{i&#x3D;0}^{N-2} \left( w_{angvel} angvel_i^2 + w_{accel} accel_i^2 \right)<br>]</li>
+<li>$cte_i$, $e\theta_i$, and $v_i$ represent the cross-track error, heading error, and velocity at step $i$.</li>
+<li>$ref_{cte}$, $ref_{\theta}$, and $ref_v$ are the target values for these states.</li>
+<li>$w_{cte}$, $w_{\theta}$, $w_v$, $w_{angvel}$, $w_{accel}$, $w_{angvel_d}$, and $w_{accel_d}$ are weights indicating the importance of each component.</li>
+<li>$angvel_i$ and $accel_i$ are the control inputs at each step for angular velocity and acceleration.</li>
 </ul>
-<p>[</p>
-<ul>
-<li>\sum_{i&#x3D;0}^{N-3} \left( w_{angvel_d} (angvel_{i+1} - angvel_i)^2 + w_{accel_d} (accel_{i+1} - accel_i)^2 \right)<br>]</li>
-</ul>
-<p>Where:</p>
-<ul>
-<li>(cte_i), (e\theta_i), and (v_i) represent the cross-track error, heading error, and velocity at step (i).</li>
-<li>(ref_{cte}), (ref_{\theta}), and (ref_v) are the target values for these states.</li>
-<li>(w_{cte}), (w_{\theta}), (w_v), (w_{angvel}), (w_{accel}), (w_{angvel_d}), and (w_{accel_d}) are weights indicating the importance of each component.</li>
-<li>(angvel_i) and (accel_i) are the control inputs at each step for angular velocity and acceleration.</li>
-</ul>
-<h2 id="Constraint-Formulations"><a href="#Constraint-Formulations" class="headerlink" title="Constraint Formulations"></a>Constraint Formulations</h2><h3 id="Initial-State-Constraints"><a href="#Initial-State-Constraints" class="headerlink" title="Initial State Constraints"></a>Initial State Constraints</h3><p>[<br>\begin{aligned}<br>    x[1] &amp;&#x3D; x_{start}, \<br>    y[1] &amp;&#x3D; y_{start}, \<br>    \theta[1] &amp;&#x3D; \theta_{start}, \<br>    v[1] &amp;&#x3D; v_{start}, \<br>    cte[1] &amp;&#x3D; cte_{start}, \<br>    e\theta[1] &amp;&#x3D; e\theta_{start}.<br>\end{aligned}<br>]</p>
-<h3 id="Vehicle-Dynamics-and-Control-Constraints"><a href="#Vehicle-Dynamics-and-Control-Constraints" class="headerlink" title="Vehicle Dynamics and Control Constraints"></a>Vehicle Dynamics and Control Constraints</h3><p>[<br>\begin{aligned}<br>    x_{t+1} &amp;&#x3D; x_t + v_t \cos(\theta_t) \cdot dt, \<br>    y_{t+1} &amp;&#x3D; y_t + v_t \sin(\theta_t) \cdot dt, \<br>    \theta_{t+1} &amp;&#x3D; \theta_t + \omega_t \cdot dt, \<br>    v_{t+1} &amp;&#x3D; v_t + a_t \cdot dt, \<br>    cte_{t+1} &amp;&#x3D; cte_t + (v_t \sin(e\theta_t) \cdot dt), \<br>    e\theta_{t+1} &amp;&#x3D; e\theta_t - (\theta_t - \text{atan}(f’(x_t))) + \omega_t \cdot dt.<br>\end{aligned}<br>]<br>where ( f’(x_t) ) represents the derivative of the polynomial trajectory fit evaluated at ( x_t ).</p>
-<h3 id="Actuator-Limitations"><a href="#Actuator-Limitations" class="headerlink" title="Actuator Limitations"></a>Actuator Limitations</h3><p>To ensure smooth control actions and avoid abrupt vehicle behavior, actuator limitations are imposed:</p>
-<p>[<br>\begin{aligned}<br>    |\omega_t| &amp;\leq \omega_{max}, \<br>    |a_t| &amp;\leq a_{max}.<br>\end{aligned}<br>]</p>
+<h3 id="Constraint-Formulations"><a href="#Constraint-Formulations" class="headerlink" title="Constraint Formulations"></a>Constraint Formulations</h3><p><strong>Initial State Constraints</strong><br>$$<br>\begin{aligned}<br>    x[1] &amp;&#x3D; x_{start}, \\<br>    y[1] &amp;&#x3D; y_{start}, \\<br>    \theta[1] &amp;&#x3D; \theta_{start}, \\<br>    v[1] &amp;&#x3D; v_{start}, \\<br>    cte[1] &amp;&#x3D; cte_{start}, \\<br>    e\theta[1] &amp;&#x3D; e\theta_{start}.<br>\end{aligned}<br>$$<br><strong>Vehicle Dynamics and Control Constraints</strong><br>$$<br>\begin{aligned}<br>    x_{t+1} &amp;&#x3D; x_t + v_t \cos(\theta_t) \cdot dt, \\<br>    y_{t+1} &amp;&#x3D; y_t + v_t \sin(\theta_t) \cdot dt, \\<br>    \theta_{t+1} &amp;&#x3D; \theta_t + \omega_t \cdot dt, \\<br>    v_{t+1} &amp;&#x3D; v_t + a_t \cdot dt, \\<br>    cte_{t+1} &amp;&#x3D; cte_t + (v_t \sin(e\theta_t) \cdot dt), \\<br>    e\theta_{t+1} &amp;&#x3D; e\theta_t - (\theta_t - \text{atan}(f’(x_t))) + \omega_t \cdot dt.<br>\end{aligned}<br>$$<br>where $ f’(x_t) $ represents the derivative of the polynomial trajectory fit evaluated at $ x_t $.</p>
+<p><strong>Actuator Limitations</strong></p>
+<p>To ensure smooth control actions and avoid abrupt vehicle behavior, actuator limitations are imposed:</p>
+<p>$$<br>\begin{aligned}<br>    |\omega_t| &amp;\leq \omega_{max}, \\<br>    |a_t| &amp;\leq a_{max}.<br>\end{aligned}<br>$$</p>
 <h3 id="Actuator-Change-Constraints"><a href="#Actuator-Change-Constraints" class="headerlink" title="Actuator Change Constraints"></a>Actuator Change Constraints</h3><p>Minimizing the change in control inputs to promote smoother transitions:</p>
-<p>[<br>\begin{aligned}<br>    |\Delta \omega_t| &amp;\leq \Delta \omega_{max}, \<br>    |\Delta a_t| &amp;\leq \Delta a_{max}.<br>\end{aligned}<br>]</p>
-<h2 id="Trajectory-Tracking-Using-ACADO"><a href="#Trajectory-Tracking-Using-ACADO" class="headerlink" title="Trajectory Tracking Using ACADO"></a>Trajectory Tracking Using ACADO</h2><p>Still trying</p>
+<p>$$<br>\begin{aligned}<br>    |\Delta \omega_t| &amp;\leq \Delta \omega_{max}, \\<br>    |\Delta a_t| &amp;\leq \Delta a_{max}.<br>\end{aligned}<br>$$</p>
+<h2 id="Trajectory-Tracking-Using-ACADOs"><a href="#Trajectory-Tracking-Using-ACADOs" class="headerlink" title="Trajectory Tracking Using ACADOs"></a>Trajectory Tracking Using ACADOs</h2><p>Still trying</p>
 
   </article>
 
