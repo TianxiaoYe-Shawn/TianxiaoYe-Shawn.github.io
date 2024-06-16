@@ -549,7 +549,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
             </div>
             <div class="flex items-center gap-1">
               <iconify-icon width="18" icon="mingcute:refresh-3-fill" ></iconify-icon>
-              Edited: <time class="w-max">2024-06-01</time>
+              Edited: <time class="w-max">2024-06-16</time>
             </div>
           </div>
           <div class="flex flex-wrap items-center gap-x-3 gap-y-3">
@@ -564,7 +564,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
             <!-- Word count -->
             <span class="flex items-center gap-1">
               <iconify-icon width="18" icon="mingcute:book-2-fill" ></iconify-icon>
-              <span>995 words, 6 min</span>
+              <span>2.4k words, 13 min</span>
             </span>
             <!-- Categories -->
             
@@ -726,7 +726,150 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
   </header>
   <!-- content -->
   <article class="post-content prose m-auto dark:prose-invert">
-    <h2 id="Trajectory-Tracking-Using-CasADi"><a href="#Trajectory-Tracking-Using-CasADi" class="headerlink" title="Trajectory Tracking Using CasADi"></a>Trajectory Tracking Using CasADi</h2><p>Wrote an MPC controller using CasADi to control the car of the Jackal Gazebo simulator to track a circular trajectory.</p>
+    <h1 id="Trajectory-Tracking-Using-ACADO"><a href="#Trajectory-Tracking-Using-ACADO" class="headerlink" title="Trajectory Tracking Using ACADO"></a>Trajectory Tracking Using ACADO</h1><p>Trajectory tracking ROS package written using ACADO-Toolkit</p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/TianxiaoYe-Shawn/ACADO_NMPC_ROS">https://github.com/TianxiaoYe-Shawn/ACADO_NMPC_ROS</a></p>
+<p>The following is the effect based on the JACKAL gazebo simulator:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dqS_6zI5x8k?si=mr2mHLAL19sSEaUl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<p><a href="##%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA%E5%9F%BA%E4%BA%8EACADO%E7%9A%84%E8%BD%A8%E8%BF%B9%E8%B7%9F%E8%B8%AAROS%E5%8A%9F%E8%83%BD%E5%8C%85"><code>中文版教程在这</code></a></p>
+<h2 id="Build-ACADO-NMPC-ROS-package-from-scratch"><a href="#Build-ACADO-NMPC-ROS-package-from-scratch" class="headerlink" title="Build ACADO NMPC ROS package from scratch"></a>Build ACADO NMPC ROS package from scratch</h2><h3 id="1-Ubuntu-and-ROS-Versions"><a href="#1-Ubuntu-and-ROS-Versions" class="headerlink" title="1. Ubuntu and ROS Versions"></a>1. Ubuntu and ROS Versions</h3><p>This ROS package is built on Ubuntu 20.04 and ROS Noetic full desktop version. It is recommended to follow this version, as the JACKAL simulator is also built on it.</p>
+<h3 id="2-Creating-a-ROS-Workspace"><a href="#2-Creating-a-ROS-Workspace" class="headerlink" title="2. Creating a ROS Workspace"></a>2. Creating a ROS Workspace</h3><p>Copy the following code into the terminal to create a workspace:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/NMPC_ACADO_ws/src/</span><br><span class="line">cd ~/NMPC_ACADO_ws/src/</span><br><span class="line">catkin_init_workspace</span><br><span class="line">cd ~/NMPC_ACADO_ws</span><br><span class="line">catkin_make</span><br><span class="line">echo &quot;source ~/NMPC_ACADO_ws/devel/setup.bash&quot; &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>You can rename <code>NMPC_ACADO_ws</code> to your preferred workspace name.</p>
+<h3 id="3-Downloading-ROS-Packages"><a href="#3-Downloading-ROS-Packages" class="headerlink" title="3. Downloading ROS Packages"></a>3. Downloading ROS Packages</h3><p>Navigate to the <code>/src</code> directory in your workspace and download the package:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/NMPC_ACADO_ws/src</span><br><span class="line">git clone https://github.com/TianxiaoYe-Shawn/ACADO_NMPC_ROS.git</span><br></pre></td></tr></table></figure>
+
+
+<p>Move the package to the <code>/src</code> directory and remove other files:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv ACADO_NMPC_ROS/acado_mpc .</span><br><span class="line">rm -r ACADO_NMPC_ROS</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Installing-ACADO"><a href="#4-Installing-ACADO" class="headerlink" title="4. Installing ACADO"></a>4. Installing ACADO</h3><p>Install dependencies:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc g++ cmake git gnuplot doxygen graphviz</span><br></pre></td></tr></table></figure>
+
+<p>Choose any working directory (I use <code>~/</code>) to download the ACADO source code:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">git clone https://github.com/acado/acado.git -b stable ACADOtoolkit</span><br></pre></td></tr></table></figure>
+
+<p>Install:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ACADOtoolkit</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>Configure the environment variable:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;source ~/ACADOtoolkit/build/acado_env.sh&quot; &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Compiling-ROS-Packages"><a href="#5-Compiling-ROS-Packages" class="headerlink" title="5. Compiling ROS Packages"></a>5. Compiling ROS Packages</h3><p>ACADO’s advantage is that it can generate efficient C code through a symbolic language. First, modify your own MPC model in the file <code>symbolic_mpc.cpp</code> inside <code>acado_mpc/acado_export_code</code> (it’s suggested not to modify it on the first run).</p>
+<p>Then generate the C code package:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~/NMPC_ACADO_ws/src/acado_mpc/acado_export_code</span><br><span class="line">mkdir build &amp;&amp; cd build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br><span class="line">./mpc</span><br></pre></td></tr></table></figure>
+
+<p>Move the generated code and build the static library:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv symbolic_mpc_export/* ../../acado_mpc_export/</span><br><span class="line">cd ../../acado_mpc_export</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>add <code>include</code> folder in your ROS package:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/NMPC_ACADO_ws/src/acado_mpc/</span><br><span class="line">mkdir include</span><br></pre></td></tr></table></figure>
+
+<p>Compile the entire ROS package:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/NMPC_ACADO_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>If everything is successful, your package is now fully set up. If you do not have any testing environment, the JACKAL simulator is a good choice next.</p>
+<h3 id="6-Setting-Up-JACKAL-Simulator"><a href="#6-Setting-Up-JACKAL-Simulator" class="headerlink" title="6. Setting Up JACKAL Simulator"></a>6. Setting Up JACKAL Simulator</h3><p>Install the JACKAL simulator with one command:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-noetic-jackal-simulator ros-noetic-jackal-desktop ros-noetic-jackal-navigation</span><br></pre></td></tr></table></figure>
+
+<p>Modify the simulator environment, we need a spacious area:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/ros/noetic/share/jackal_gazebo/launch/</span><br><span class="line">sudo vi jackal_world.launch</span><br></pre></td></tr></table></figure>
+
+<p>Press <code>i</code> to enter edit mode.</p>
+<p>Change the line <code>&lt;arg name=&quot;world_name...&quot;</code> to <code>&lt;arg name=&quot;world_name&quot; default=&quot;$(find gazebo_ros)/launch/empty_world.launch&quot; /&gt;</code></p>
+<p>Then press <code>ESC</code>, type <code>:wq</code> to save and exit.</p>
+<p>The JACKAL simulator is now fully set up.</p>
+<h3 id="7-Start-Running"><a href="#7-Start-Running" class="headerlink" title="7. Start Running!"></a>7. Start Running!</h3><p>(For each of the following <code>rosrun</code> and <code>roslaunch</code>, you need to open a new terminal)</p>
+<p>First, open the JACKAL simulator:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch jackal_gazebo jackal_world.launch</span><br></pre></td></tr></table></figure>
+
+<p>You should see the JACKAL vehicle parked in Gazebo.</p>
+<p>Then open the tracking test environment (including publishing trajectory, configuring rviz):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch acado_mpc tracking_env.launch</span><br></pre></td></tr></table></figure>
+
+<p>You should see a green circular trajectory in rviz (you can customize your trajectory in the <code>trajectory_publisher.cpp</code> file).</p>
+<p>Then open the control input monitor:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun acado_mpc plot_control_input.py</span><br></pre></td></tr></table></figure>
+
+<p>You should see the monitor displaying messages on two control input topics, which are static since no messages are published yet.</p>
+<p>Configure the MPC weight parameters:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch acado_mpc set_weight.launch</span><br></pre></td></tr></table></figure>
+
+<p>Then directly <code>ctrl+c</code> to cancel, at this point the custom weight parameters have been passed.</p>
+<p>Finally, in this terminal, open the MPC control node:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun acado_mpc mpc_node</span><br></pre></td></tr></table></figure>
+
+<p>At this point, you should see the JACKAL vehicle start moving and following the trajectory.</p>
+<h2 id="从零开始搭建基于ACADO的轨迹跟踪ROS功能包"><a href="#从零开始搭建基于ACADO的轨迹跟踪ROS功能包" class="headerlink" title="从零开始搭建基于ACADO的轨迹跟踪ROS功能包"></a>从零开始搭建基于ACADO的轨迹跟踪ROS功能包</h2><h3 id="1-Ubuntu和ROS版本"><a href="#1-Ubuntu和ROS版本" class="headerlink" title="1.Ubuntu和ROS版本"></a>1.Ubuntu和ROS版本</h3><p>本ros功能包构建在Ubuntu20.04和ROS Noetic桌面完全版上。建议按照这个版本来，后续的JACKAL模拟器也是在这个版本上构建的。</p>
+<h3 id="2-创建ROS工作空间"><a href="#2-创建ROS工作空间" class="headerlink" title="2.创建ROS工作空间"></a>2.创建ROS工作空间</h3><p>复制以下代码到终端以创建工作空间：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/NMPC_ACADO_ws/src/</span><br><span class="line">cd ~/NMPC_ACADO_ws/src/</span><br><span class="line">catkin_init_workspace</span><br><span class="line">cd ~/NMPC_ACADO_ws</span><br><span class="line">catkin_make</span><br><span class="line">echo &quot;source ~/NMPC_ACADO_ws/devel/setup.bash&quot; &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>你可以将<code>NMPC_ACADO_ws</code>修改成你定义的工作空间名。</p>
+<h3 id="3-下载ROS功能包"><a href="#3-下载ROS功能包" class="headerlink" title="3.下载ROS功能包"></a>3.下载ROS功能包</h3><p>进入你工作空间下的<code>/src</code>目录，下载功能包：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/NMPC_ACADO_ws/src</span><br><span class="line">git clone https://github.com/TianxiaoYe-Shawn/ACADO_NMPC_ROS.git</span><br></pre></td></tr></table></figure>
+
+<p>将功能包移动到<code>/src</code>目录下并删除其他的文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv ACADO_NMPC_ROS/acado_mpc .</span><br><span class="line">rm -r ACADO_NMPC_ROS</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-安装ACADO"><a href="#4-安装ACADO" class="headerlink" title="4.安装ACADO"></a>4.安装ACADO</h3><p>安装依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc g++ cmake git gnuplot doxygen graphviz</span><br></pre></td></tr></table></figure>
+
+<p>任意选择一个工作目录（我是在<code>/home/~/</code>）下载ACADO源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">git clone https://github.com/acado/acado.git -b stable ACADOtoolkit</span><br></pre></td></tr></table></figure>
+
+<p>安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ACADOtoolkit</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>配置环境变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;source ~/ACADOtoolkit/build/acado_env.sh&quot; &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-编译ROS功能包"><a href="#5-编译ROS功能包" class="headerlink" title="5.编译ROS功能包"></a>5.编译ROS功能包</h3><p>ACADO的优点就是能够通过符号化的语言生成高效的c代码。首先在<code>acado_mpc/acado_export_code</code>中的<code>symbolic_mpc.cpp</code>文件修改你自己的mpc模型（第一次跑建议不要动）。</p>
+<p>然后生成c代码包：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~/NMPC_ACADO_ws/src/acado_mpc/acado_export_code</span><br><span class="line">mkdir build &amp;&amp; cd build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br><span class="line">./mpc</span><br></pre></td></tr></table></figure>
+
+<p>移动生成的代码并搭建静态库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv symbolic_mpc_export/* ../../acado_mpc_export/</span><br><span class="line">cd ../../acado_mpc_export</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>添加 <code>include</code> 文件夹（存放头文件的，目前是空的，你可以把你未来写的头文件放进去）:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/NMPC_ACADO_ws/src/acado_mpc/</span><br><span class="line">mkdir include</span><br></pre></td></tr></table></figure>
+
+<p>编译整个ros功能包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/NMPC_ACADO_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>如果一切成功，至此你的功能包就已经搭建完毕了。如果你没有任何的测试环境，接下来这个JACKAL模拟器是不错的选择。</p>
+<h3 id="6-搭建JACKAL模拟器"><a href="#6-搭建JACKAL模拟器" class="headerlink" title="6.搭建JACKAL模拟器"></a>6.搭建JACKAL模拟器</h3><p>一键安装JACKAL小车模拟器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-noetic-jackal-simulator ros-noetic-jackal-desktop ros-noetic-jackal-navigation</span><br></pre></td></tr></table></figure>
+
+<p>修改模拟器的环境，我们需要一个空旷的场地</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/ros/noetic/share/jackal_gazebo/launch/</span><br><span class="line">sudo vi jackal_world.launch</span><br></pre></td></tr></table></figure>
+
+<p>按<code>i</code>进入编辑模式</p>
+<p>将<code>&lt;arg name=&quot;world_name...&quot;</code>那句修改成<code>&lt;arg name=&quot;world_name&quot; default=&quot;$(find gazebo_ros)/launch/empty_world.launch&quot; /&gt;</code></p>
+<p>然后按<code>ESC</code>输入<code>:wq</code>保存并退出。</p>
+<p>至此JACKAL模拟器搭建完毕。</p>
+<h3 id="7-开始运行！"><a href="#7-开始运行！" class="headerlink" title="7.开始运行！"></a>7.开始运行！</h3><p>（以下每一个<code>rosrun</code>和<code>roslaunch</code>都需要你重新打开一个新的终端）</p>
+<p>首先打开JACKAL模拟器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch jackal_gazebo jackal_world.launch</span><br></pre></td></tr></table></figure>
+
+<p>你应该能看到JACKAL小车在gazebo里停着。</p>
+<p>然后打开轨迹跟踪的测试环境（包括发布轨迹，配置rviz）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch acado_mpc tracking_env.launch</span><br></pre></td></tr></table></figure>
+
+<p>你应该能看到rviz中有绿色圆形轨迹（你可以在<code>trajectory_publisher.cpp</code>文件中自定义你的轨迹）。</p>
+<p>然后打开控制输入监视器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun acado_mpc plot_control_input.py</span><br></pre></td></tr></table></figure>
+
+<p>你应该能看到监视器显示着两个控制输入话题上的消息，此时由于没有消息发布所以是静止的。</p>
+<p>配置mpc的权重参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch acado_mpc set_weight.launch</span><br></pre></td></tr></table></figure>
+
+<p>然后直接<code>ctrl+c</code>取消，此时自定义的权重参数已经传入。</p>
+<p>紧接着在这个终端里打开mpc控制节点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun acado_mpc mpc_node</span><br></pre></td></tr></table></figure>
+
+<p>至此你应该能看到JACKAL小车开始移动并进行轨迹跟踪。</p>
+<h1 id="Trajectory-Tracking-Using-CasADi"><a href="#Trajectory-Tracking-Using-CasADi" class="headerlink" title="Trajectory Tracking Using CasADi"></a>Trajectory Tracking Using CasADi</h1><p>Wrote an MPC controller using CasADi to control the car of the Jackal Gazebo simulator to track a circular trajectory.</p>
 <p>code: <a target="_blank" rel="noopener" href="https://github.com/wisc-arclab/JACKAL_UGV/tree/CasADi-NMPC">https://github.com/wisc-arclab/JACKAL_UGV/tree/CasADi-NMPC</a></p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fyGHxzgEz0o?si=VZve3lWYjZkNh9NA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -740,7 +883,7 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
 <p><strong>Following Dynamics</strong>: The system must adhere to its natural dynamics, which describe how its states evolve over time based on the inputs applied. This ensures that the predictions and control actions are realistic and feasible given the physical nature of the system.</p>
 <p><strong>Starting From Current State</strong>: The optimization begins from the current, actual state of the system. This makes the whole control process relevant and grounded in the system’s real-world situation at the start of control.</p>
 <p><strong>Respecting Input Limits</strong>: The control inputs are kept within practical limits. For instance, the system cannot accelerate or rotate beyond what it’s physically capable of, ensuring safety and avoiding damage.</p>
-<h2 id="Trajectory-Tracking-Using-CppAD-Ipopt"><a href="#Trajectory-Tracking-Using-CppAD-Ipopt" class="headerlink" title="Trajectory Tracking Using CppAD &amp; Ipopt"></a>Trajectory Tracking Using CppAD &amp; Ipopt</h2><p>Wrote an MPC controller using CppAD and Ipopt to solve the non-linear optimal control problem and let the car of the Jackal Gazebo simulator to track a figure-8 trajectory.</p>
+<h1 id="Trajectory-Tracking-Using-CppAD-Ipopt"><a href="#Trajectory-Tracking-Using-CppAD-Ipopt" class="headerlink" title="Trajectory Tracking Using CppAD &amp; Ipopt"></a>Trajectory Tracking Using CppAD &amp; Ipopt</h1><p>Wrote an MPC controller using CppAD and Ipopt to solve the non-linear optimal control problem and let the car of the Jackal Gazebo simulator to track a figure-8 trajectory.</p>
 <p>code: <a target="_blank" rel="noopener" href="https://github.com/wisc-arclab/JACKAL_UGV/tree/CppAD/Ipopt-NMPC">https://github.com/wisc-arclab/JACKAL_UGV/tree/CppAD/Ipopt-NMPC</a></p>
 <p>Real world:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/j5wSrnwOiUY?si=3-WKk24-8qVEk_vu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -778,7 +921,6 @@ A first-year graduate student at the ARClab, University of Wisconsin-Madison. Bo
 <p>$$<br>\begin{aligned}<br>    |\omega_t| &amp;\leq \omega_{max}, \\<br>    |a_t| &amp;\leq a_{max}.<br>\end{aligned}<br>$$</p>
 <h3 id="Actuator-Change-Constraints"><a href="#Actuator-Change-Constraints" class="headerlink" title="Actuator Change Constraints"></a>Actuator Change Constraints</h3><p>Minimizing the change in control inputs to promote smoother transitions:</p>
 <p>$$<br>\begin{aligned}<br>    |\Delta \omega_t| &amp;\leq \Delta \omega_{max}, \\<br>    |\Delta a_t| &amp;\leq \Delta a_{max}.<br>\end{aligned}<br>$$</p>
-<h2 id="Trajectory-Tracking-Using-ACADOs"><a href="#Trajectory-Tracking-Using-ACADOs" class="headerlink" title="Trajectory Tracking Using ACADOs"></a>Trajectory Tracking Using ACADOs</h2><p>Still trying</p>
 
   </article>
 
